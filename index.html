@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Plumbing & Heating Services</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Cal.com Embed Loader -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", {origin:"https://app.cal.com"});
+  </script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-gray-800 font-sans pb-12">
 
   <!-- Dynamic Header -->
   <header class="bg-white shadow-sm border-b sticky top-0 z-50">
@@ -21,84 +27,119 @@
     </div>
   </header>
 
-  <!-- Dynamic Hero Section -->
-  <section class="bg-gradient-to-b from-gray-100 to-white py-16 px-4">
-    <div class="max-w-4xl mx-auto text-center space-y-6">
-      <span id="client-city" class="text-sm font-semibold tracking-wider uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full">Local Contractor</span>
-      <h1 id="client-tagline" class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-b from-gray-100 to-white py-12 px-4 text-center">
+    <div class="max-w-4xl mx-auto space-y-4">
+      <span id="client-city" class="text-xs font-semibold uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full">Local Contractor</span>
+      <h1 id="client-tagline" class="text-4xl md:text-5xl font-extrabold text-gray-900">
         Reliable Plumbing & Emergency Heating
       </h1>
       <p class="text-lg text-gray-600">
-        Serving <span id="client-city-text">your area</span> with 24/7 fast response, certified engineers, and transparent pricing.
+        Serving <span id="client-city-text">your area</span> with 24/7 fast emergency response and instant AI dispatching.
       </p>
-
-      <div class="pt-4 flex justify-center gap-4">
-        <a id="hero-cta" href="#booking" class="text-white text-lg font-bold px-8 py-3.5 rounded-lg shadow-lg transition-all">
-          Book Emergency Service
-        </a>
-      </div>
     </div>
   </section>
 
-  <!-- Pitch Feature: Voice AI & Support Chat Section -->
-  <section id="booking" class="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-8">
-    <div class="bg-white p-6 rounded-xl shadow-md border">
-      <h2 class="text-2xl font-bold mb-4 text-gray-900">Direct Contact Information</h2>
-      <ul class="space-y-3 text-gray-600">
-        <li><strong>Address:</strong> <span id="client-address">Loading...</span></li>
-        <li><strong>Email:</strong> <span id="client-email">Loading...</span></li>
-        <li><strong>Phone:</strong> <span id="client-phone-body">Loading...</span></li>
-        <li><strong>Google Rating:</strong> <span id="client-rating">5.0 ★</span></li>
-      </ul>
-    </div>
+  <!-- Main Conversion Area: AI Phone Callback + Calendar -->
+  <main class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 my-8">
 
-    <!-- AI Chatbot Placeholder for AnythingLLM / Voice AI -->
-    <div class="bg-gray-900 text-white p-6 rounded-xl shadow-md flex flex-col justify-between">
+    <!-- Feature 1: Immediate AI Voice Call Form -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex flex-col justify-between">
       <div>
-        <span class="text-xs font-semibold uppercase tracking-widest text-emerald-400">Live Demo Feature</span>
-        <h3 class="text-xl font-bold mt-1">24/7 AI Dispatcher & Booking Widget</h3>
-        <p class="text-sm text-gray-400 mt-2">
-          This widget handles call-outs and captures customer booking inquiries for <span id="chat-client-name">this company</span> automatically.
+        <div class="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          <span>Instant AI Phone Dispatcher</span>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900">Request Emergency Callback</h2>
+        <p class="text-sm text-gray-600 mt-1 mb-6">
+          Submit your details below and our AI Voice Assistant will call your phone within 30 seconds to schedule an emergency technician for <span class="client-name-text">this business</span>.
         </p>
+
+        <form id="ai-callback-form" onsubmit="handleCallbackSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Your Name</label>
+            <input type="text" id="user-name" required placeholder="John Doe" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Phone Number (For Instant Call)</label>
+            <input type="tel" id="user-phone" required placeholder="+353 87 123 4567" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Service Needed</label>
+            <select id="user-service" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
+              <option>Emergency Plumbing Repair</option>
+              <option>Boiler Service & Maintenance</option>
+              <option>Heating & Gas Leak</option>
+              <option>General Inspection</option>
+            </select>
+          </div>
+          <button id="submit-callback-btn" type="submit" class="w-full py-4 text-white font-bold rounded-lg shadow-md hover:opacity-90 transition-all text-center">
+            📞 Submit Info & Call Me Instantly
+          </button>
+        </form>
+        <div id="callback-status" class="hidden mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm font-medium rounded-lg text-center border border-emerald-200">
+          ✅ Request received! Calling your phone now...
+        </div>
       </div>
-      <div class="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700 text-center">
-        <p class="text-xs text-gray-400">[ Your AnythingLLM / Voice AI Widget Embeds Here ]</p>
+
+      <!-- Business info -->
+      <div class="mt-8 pt-4 border-t text-xs text-gray-500 space-y-1">
+        <p><strong>Direct Address:</strong> <span id="client-address">Loading...</span></p>
+        <p><strong>Direct Email:</strong> <span id="client-email">Loading...</span></p>
+        <p><strong>Google Rating:</strong> <span id="client-rating">5.0 ★</span></p>
       </div>
     </div>
-  </section>
+
+    <!-- Feature 2: Embedded Booking Calendar -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex flex-col">
+      <h2 class="text-2xl font-bold text-gray-900 mb-1">Book an Appointment Online</h2>
+      <p class="text-sm text-gray-600 mb-4">Select a convenient date and time on the calendar below.</p>
+      
+      <!-- Cal.com Inline Container -->
+      <div id="my-cal-inline" class="w-full h-[450px] overflow-hidden rounded-xl border border-gray-100 bg-gray-50"></div>
+    </div>
+
+  </main>
+
+  <!-- Feature 3: Embedded AnythingLLM AI Chatbot (Bottom Right Floating Widget) -->
+  <div id="ai-chat-widget" class="fixed bottom-4 right-4 z-50">
+    <div class="bg-gray-900 text-white p-4 rounded-2xl shadow-2xl border border-gray-700 max-w-xs flex items-center space-x-3 cursor-pointer hover:bg-gray-800 transition-all" onclick="alert('AI Support Chat Widget triggered for ' + document.getElementById('client-name').innerText)">
+      <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-white text-lg animate-bounce">
+        💬
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Live Chat Assistant</p>
+        <p class="text-sm font-bold">Ask AI to Book Appointment</p>
+      </div>
+    </div>
+  </div>
 
   <!-- JavaScript Dynamic Loader -->
   <script>
-    // Replace with your actual GitHub username
-    const GITHUB_USERNAME = "YOUR_GITHUB_USERNAME"; 
+    const GITHUB_USERNAME = "nick12889"; 
     const CLIENTS_JSON_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/plumbing-lead-engine/main/clients.json`;
 
     async function loadClientData() {
-      // Parse ?client=slug from URL
       const urlParams = new URLSearchParams(window.location.search);
       const clientSlug = urlParams.get('client') || 'doc-heating-and-plumbing';
 
       try {
         const response = await fetch(CLIENTS_JSON_URL);
         const clients = await response.json();
-        
-        // Find matching plumber
         const client = clients.find(c => c.slug === clientSlug) || clients[0];
 
-        // Fallback color if missing
         const primaryColor = client.primary_hex_color && client.primary_hex_color.startsWith('#') 
           ? client.primary_hex_color 
           : '#1E3A8A';
 
-        // Update Text Content
-        document.getElementById('page-title').innerText = `${client.name} | Local Services`;
+        // Update Text
+        document.getElementById('page-title').innerText = `${client.name} | Booking & Emergency Service`;
         document.getElementById('client-name').innerText = client.name;
-        document.getElementById('chat-client-name').innerText = client.name;
+        document.querySelectorAll('.client-name-text').forEach(el => el.innerText = client.name);
         document.getElementById('client-phone').innerText = client.phone || 'Contact Us';
-        document.getElementById('client-phone-body').innerText = client.phone || 'N/A';
         document.getElementById('client-email').innerText = client.email || 'N/A';
         document.getElementById('client-address').innerText = client.address || client.city;
-        document.getElementById('client-city').innerText = `Primary Service Area: ${client.city}`;
+        document.getElementById('client-city').innerText = `Service Area: ${client.city}`;
         document.getElementById('client-city-text').innerText = client.city;
         document.getElementById('client-rating').innerText = client.rating ? `${client.rating} ★ (${client.reviews} reviews)` : 'Verified Service';
         
@@ -106,23 +147,36 @@
           document.getElementById('client-tagline').innerText = client.tagline;
         }
 
-        // Update Logo if available
+        // Logo
         if (client.logo_url) {
           const logoImg = document.getElementById('client-logo');
           logoImg.src = client.logo_url;
           logoImg.classList.remove('hidden');
         }
 
-        // Apply Primary Brand Hex Color dynamically to CTA Buttons
+        // Dynamic Button Colors
         const callBtn = document.getElementById('call-btn');
-        const heroCta = document.getElementById('hero-cta');
+        const submitCallbackBtn = document.getElementById('submit-callback-btn');
         callBtn.style.backgroundColor = primaryColor;
         callBtn.href = `tel:${client.phone}`;
-        heroCta.style.backgroundColor = primaryColor;
+        submitCallbackBtn.style.backgroundColor = primaryColor;
+
+        // Initialize Cal.com Embed Dynamically
+        Cal("inline", {
+          elementOrSelector: "#my-cal-inline",
+          calLink: "calcom/30min", // Replace with your Cal.com link
+          layout: "month_view"
+        });
 
       } catch (error) {
         console.error("Failed to load clients.json:", error);
       }
+    }
+
+    function handleCallbackSubmit(event) {
+      event.preventDefault();
+      document.getElementById('callback-status').classList.remove('hidden');
+      // Here you connect your Vapi/Retell/Bland.ai webhook endpoint to trigger the call
     }
 
     loadClientData();
