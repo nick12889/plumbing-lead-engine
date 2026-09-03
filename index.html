@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Plumbing & Heating Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Dynamic Header -->
+  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <img id="client-logo" src="" alt="Logo" class="h-10 w-auto hidden">
+        <span id="client-name" class="text-xl font-bold text-gray-900">Plumbing Services</span>
+      </div>
+      <a id="call-btn" href="tel:" class="text-white font-semibold px-5 py-2.5 rounded-lg shadow transition-all">
+        Call Now: <span id="client-phone">Loading...</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Dynamic Hero Section -->
+  <section class="bg-gradient-to-b from-gray-100 to-white py-16 px-4">
+    <div class="max-w-4xl mx-auto text-center space-y-6">
+      <span id="client-city" class="text-sm font-semibold tracking-wider uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full">Local Contractor</span>
+      <h1 id="client-tagline" class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight">
+        Reliable Plumbing & Emergency Heating
+      </h1>
+      <p class="text-lg text-gray-600">
+        Serving <span id="client-city-text">your area</span> with 24/7 fast response, certified engineers, and transparent pricing.
+      </p>
+
+      <div class="pt-4 flex justify-center gap-4">
+        <a id="hero-cta" href="#booking" class="text-white text-lg font-bold px-8 py-3.5 rounded-lg shadow-lg transition-all">
+          Book Emergency Service
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pitch Feature: Voice AI & Support Chat Section -->
+  <section id="booking" class="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-8">
+    <div class="bg-white p-6 rounded-xl shadow-md border">
+      <h2 class="text-2xl font-bold mb-4 text-gray-900">Direct Contact Information</h2>
+      <ul class="space-y-3 text-gray-600">
+        <li><strong>Address:</strong> <span id="client-address">Loading...</span></li>
+        <li><strong>Email:</strong> <span id="client-email">Loading...</span></li>
+        <li><strong>Phone:</strong> <span id="client-phone-body">Loading...</span></li>
+        <li><strong>Google Rating:</strong> <span id="client-rating">5.0 ★</span></li>
+      </ul>
+    </div>
+
+    <!-- AI Chatbot Placeholder for AnythingLLM / Voice AI -->
+    <div class="bg-gray-900 text-white p-6 rounded-xl shadow-md flex flex-col justify-between">
+      <div>
+        <span class="text-xs font-semibold uppercase tracking-widest text-emerald-400">Live Demo Feature</span>
+        <h3 class="text-xl font-bold mt-1">24/7 AI Dispatcher & Booking Widget</h3>
+        <p class="text-sm text-gray-400 mt-2">
+          This widget handles call-outs and captures customer booking inquiries for <span id="chat-client-name">this company</span> automatically.
+        </p>
+      </div>
+      <div class="mt-6 p-4 bg-gray-800 rounded-lg border border-gray-700 text-center">
+        <p class="text-xs text-gray-400">[ Your AnythingLLM / Voice AI Widget Embeds Here ]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript Dynamic Loader -->
+  <script>
+    // Replace with your actual GitHub username
+    const GITHUB_USERNAME = "YOUR_GITHUB_USERNAME"; 
+    const CLIENTS_JSON_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/plumbing-lead-engine/main/clients.json`;
+
+    async function loadClientData() {
+      // Parse ?client=slug from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const clientSlug = urlParams.get('client') || 'doc-heating-and-plumbing';
+
+      try {
+        const response = await fetch(CLIENTS_JSON_URL);
+        const clients = await response.json();
+        
+        // Find matching plumber
+        const client = clients.find(c => c.slug === clientSlug) || clients[0];
+
+        // Fallback color if missing
+        const primaryColor = client.primary_hex_color && client.primary_hex_color.startsWith('#') 
+          ? client.primary_hex_color 
+          : '#1E3A8A';
+
+        // Update Text Content
+        document.getElementById('page-title').innerText = `${client.name} | Local Services`;
+        document.getElementById('client-name').innerText = client.name;
+        document.getElementById('chat-client-name').innerText = client.name;
+        document.getElementById('client-phone').innerText = client.phone || 'Contact Us';
+        document.getElementById('client-phone-body').innerText = client.phone || 'N/A';
+        document.getElementById('client-email').innerText = client.email || 'N/A';
+        document.getElementById('client-address').innerText = client.address || client.city;
+        document.getElementById('client-city').innerText = `Primary Service Area: ${client.city}`;
+        document.getElementById('client-city-text').innerText = client.city;
+        document.getElementById('client-rating').innerText = client.rating ? `${client.rating} ★ (${client.reviews} reviews)` : 'Verified Service';
+        
+        if (client.tagline) {
+          document.getElementById('client-tagline').innerText = client.tagline;
+        }
+
+        // Update Logo if available
+        if (client.logo_url) {
+          const logoImg = document.getElementById('client-logo');
+          logoImg.src = client.logo_url;
+          logoImg.classList.remove('hidden');
+        }
+
+        // Apply Primary Brand Hex Color dynamically to CTA Buttons
+        const callBtn = document.getElementById('call-btn');
+        const heroCta = document.getElementById('hero-cta');
+        callBtn.style.backgroundColor = primaryColor;
+        callBtn.href = `tel:${client.phone}`;
+        heroCta.style.backgroundColor = primaryColor;
+
+      } catch (error) {
+        console.error("Failed to load clients.json:", error);
+      }
+    }
+
+    loadClientData();
+  </script>
+</body>
+</html>
