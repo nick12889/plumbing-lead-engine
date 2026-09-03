@@ -1,183 +1,36 @@
 #plumbing-lead-engine
-[
-  {
-    "slug": "doc-heating-and-plumbing",
-    "name": "DOC Heating & Plumbing",
-    "type": "Plumber",
-    "email": "docheatandplumb@gmail.com",
-    "phone": "+353 45 522 986",
-    "website": "https://docheatingandplumbing.weebly.com/",
-    "address": "Kildare",
-    "city": "Kildare",
-    "rating": 5.0,
-    "reviews": 8,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "total-heating-and-plumbing-services-ltd",
-    "name": "Total Heating & Plumbing Services Ltd.",
-    "type": "Plumber",
-    "email": "info@totalheating.ie",
-    "phone": "+353 86 233 6070",
-    "website": "http://totalheating.ie/",
-    "address": "Ballyshane, Rathangan, Co. Kildare, R51 R647",
-    "city": "Rathangan",
-    "rating": 4.1,
-    "reviews": 40,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "tja-plumbing",
-    "name": "TJA Plumbing",
-    "type": "Plumber",
-    "email": "akellyplumbing@gmail.com",
-    "phone": "+353 87 617 6347",
-    "website": "http://www.tjaplumbing.ie/",
-    "address": "Killyganard, Ballylynan, Co. Kildare",
-    "city": "Ballylynan",
-    "rating": 5.0,
-    "reviews": 1,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "crossland-plumbers",
-    "name": "Crossland Plumbers",
-    "type": "Plumber",
-    "email": "info@crosslandplumbers.ie",
-    "phone": "+353 1 627 4339",
-    "website": "https://crosslandplumbers.ie/",
-    "address": "7 The Willows, Castletown Dr, Crodaun, Celbridge, Co. Kildare, W23 Y132",
-    "city": "Celbridge",
-    "rating": 4.8,
-    "reviews": 5,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "rd-plumbing",
-    "name": "RD Plumbing",
-    "type": "Plumber",
-    "email": "info@rdplumbing.ie",
-    "phone": "+353 56 444 0874",
-    "website": "https://www.rdplumbing.ie/",
-    "address": "Unit 14B, Castlecomer Business Park, Ballyhimmin, Castlecomer, Co. Kilkenny, R95 DAE2",
-    "city": "Castlecomer",
-    "rating": 4.5,
-    "reviews": 101,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "freeman-plumbing-services",
-    "name": "Freeman Plumbing Services",
-    "type": "Plumber",
-    "email": "davidfreemanplumbing@gmail.com",
-    "phone": "+353 85 101 0987",
-    "website": "https://www.freemanplumbingservices.com/",
-    "address": "Oak Park Ave, Cradockstown North, Naas, Co. Kildare",
-    "city": "Naas",
-    "rating": 4.9,
-    "reviews": 157,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "apg-plumbing-and-heating",
-    "name": "APG Plumbing & Heating",
-    "type": "Plumber",
-    "email": "info@plumbersinmeath.ie",
-    "phone": "+353 87 279 1645",
-    "website": "http://www.plumbersinmeath.ie/",
-    "address": "110 Racehill Cres, Racehill Manor, Ashbourne, Co. Meath, A84 VA40",
-    "city": "Ashbourne",
-    "rating": 4.1,
-    "reviews": 67,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "dublin-plumbing-and-gas",
-    "name": "Dublin Plumbing and Gas",
-    "type": "Plumber",
-    "email": "dublinplumbingandgas@hotmail.com",
-    "phone": "+353 87 634 4511",
-    "website": "http://www.dublinplumbingandgas.com/",
-    "address": "296 Cappagh Rd, Finglas, Dublin 11, D11 X6F9",
-    "city": "Dublin 11",
-    "rating": 4.7,
-    "reviews": 1216,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "stillorgan-gas-plumbing-and-electrical",
-    "name": "Stillorgan Gas, Plumbing & Electrical",
-    "type": "Plumber",
-    "email": "info@stillorgangas.com",
-    "phone": "+353 87 460 8501",
-    "website": "https://www.stillorgangas.ie/",
-    "address": "Lower Kilmacud Rd, Stillorgan, Dublin",
-    "city": "Dublin",
-    "rating": 4.5,
-    "reviews": 1018,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "fergus-oneill",
-    "name": "Fergus O'Neill",
-    "type": "Plumber",
-    "email": "fergusoneill55@gmail.com",
-    "phone": "+353 86 302 9355",
-    "website": "http://www.fergusoneillplumbingandheating.com/",
-    "address": "White House, Carlow, Graiguecullen, Co. Carlow",
-    "city": "Graiguecullen",
-    "rating": 4.8,
-    "reviews": 8,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "leinster-gas",
-    "name": "Leinster Gas",
-    "type": "Plumber",
-    "email": "info@leinstergas.ie",
-    "phone": "+353 41 984 8774",
-    "website": "http://www.leinstergas.ie/",
-    "address": "10a Beechgrove Terrace, Moneymore, Drogheda, Co. Louth, A92 CR92",
-    "city": "Drogheda",
-    "rating": 5.0,
-    "reviews": 686,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  },
-  {
-    "slug": "burke-plumbing-and-heating",
-    "name": "Burke Plumbing & Heating",
-    "type": "Plumber",
-    "email": "",
-    "phone": "+353 1 624 9656",
-    "website": "",
-    "address": "18 Abbeydale Rise, Ballyowen, Lucan, Co. Dublin, K78 PN73",
-    "city": "Lucan",
-    "rating": null,
-    "reviews": 0,
-    "logo_url": "",
-    "primary_hex_color": "",
-    "tagline": ""
-  }
-]
+Here are the live dynamic landing page links for all 11 plumbing companies 
+
+1. **DOC Heating & Plumbing:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=doc-heating-and-plumbing](https://nick12889.github.io/plumbing-lead-engine/?client=doc-heating-and-plumbing)
+`
+2. **Total Heating & Plumbing Services Ltd.:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=total-heating-and-plumbing-services-ltd](https://nick12889.github.io/plumbing-lead-engine/?client=total-heating-and-plumbing-services-ltd)`
+
+3. **TJA Plumbing:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=tja-plumbing](https://nick12889.github.io/plumbing-lead-engine/?client=tja-plumbing)`
+
+4. **Crossland Plumbers:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=crossland-plumbers](https://nick12889.github.io/plumbing-lead-engine/?client=crossland-plumbers)`
+
+5. **RD Plumbing:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=rd-plumbing](https://nick12889.github.io/plumbing-lead-engine/?client=rd-plumbing)`
+
+6. **Freeman Plumbing Services:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=freeman-plumbing-services](https://nick12889.github.io/plumbing-lead-engine/?client=freeman-plumbing-services)`
+
+7. **APG Plumbing & Heating:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=apg-plumbing-and-heating](https://nick12889.github.io/plumbing-lead-engine/?client=apg-plumbing-and-heating)`
+
+8. **Dublin Plumbing and Gas:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=dublin-plumbing-and-gas](https://nick12889.github.io/plumbing-lead-engine/?client=dublin-plumbing-and-gas)`
+
+9. **Stillorgan Gas, Plumbing & Electrical:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=stillorgan-gas-plumbing-and-electrical](https://nick12889.github.io/plumbing-lead-engine/?client=stillorgan-gas-plumbing-and-electrical)`
+
+10. **Fergus O'Neill:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=fergus-oneill](https://nick12889.github.io/plumbing-lead-engine/?client=fergus-oneill)`
+
+11. **Leinster Gas:**
+`[https://nick12889.github.io/plumbing-lead-engine/?client=leinster-gas](https://nick12889.github.io/plumbing-lead-engine/?client=leinster-gas)`
+
