@@ -6,7 +6,7 @@
   <title id="page-title">Plumbing & Heating Services</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Cal.com Embed Loader -->
+  <!-- Cal.com Official Embed Loader -->
   <script type="text/javascript">
     (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
     Cal("init", {origin:"https://app.cal.com"});
@@ -14,8 +14,8 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-12">
 
-  <!-- Dynamic Header -->
-  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <div class="flex items-center space-x-3">
         <img id="client-logo" src="" alt="Logo" class="h-10 w-auto hidden">
@@ -28,22 +28,22 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-b from-gray-100 to-white py-12 px-4 text-center">
-    <div class="max-w-4xl mx-auto space-y-4">
+  <section class="bg-gradient-to-b from-gray-100 to-white py-10 px-4 text-center">
+    <div class="max-w-4xl mx-auto space-y-3">
       <span id="client-city" class="text-xs font-semibold uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full">Local Contractor</span>
-      <h1 id="client-tagline" class="text-4xl md:text-5xl font-extrabold text-gray-900">
-        Reliable Plumbing & Emergency Heating
+      <h1 id="client-tagline" class="text-3xl md:text-5xl font-extrabold text-gray-900">
+        Reliable Plumbing & Heating
       </h1>
-      <p class="text-lg text-gray-600">
+      <p class="text-base md:text-lg text-gray-600">
         Serving <span id="client-city-text">your area</span> with 24/7 fast emergency response and instant AI dispatching.
       </p>
     </div>
   </section>
 
-  <!-- Main Conversion Area: AI Phone Callback + Calendar -->
-  <main class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 my-8">
+  <!-- Main Grid Container -->
+  <main class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-8 my-6">
 
-    <!-- Feature 1: Immediate AI Voice Call Form -->
+    <!-- 1. AI Voice Call Form -->
     <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex flex-col justify-between">
       <div>
         <div class="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-3">
@@ -52,7 +52,7 @@
         </div>
         <h2 class="text-2xl font-bold text-gray-900">Request Emergency Callback</h2>
         <p class="text-sm text-gray-600 mt-1 mb-6">
-          Submit your details below and our AI Voice Assistant will call your phone within 30 seconds to schedule an emergency technician for <span class="client-name-text">this business</span>.
+          Submit your info below and our AI Voice Agent will call your phone within 30 seconds to schedule service.
         </p>
 
         <form id="ai-callback-form" onsubmit="handleCallbackSubmit(event)" class="space-y-4">
@@ -73,48 +73,69 @@
               <option>General Inspection</option>
             </select>
           </div>
-          <button id="submit-callback-btn" type="submit" class="w-full py-4 text-white font-bold rounded-lg shadow-md hover:opacity-90 transition-all text-center">
+          <button id="submit-callback-btn" type="submit" class="w-full py-4 text-white font-bold rounded-lg shadow-md hover:opacity-90 transition-all text-center bg-blue-900">
             📞 Submit Info & Call Me Instantly
           </button>
         </form>
+
         <div id="callback-status" class="hidden mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm font-medium rounded-lg text-center border border-emerald-200">
-          ✅ Request received! Calling your phone now...
+          ✅ Triggering AI Phone Agent...
         </div>
       </div>
 
-      <!-- Business info -->
       <div class="mt-8 pt-4 border-t text-xs text-gray-500 space-y-1">
         <p><strong>Direct Address:</strong> <span id="client-address">Loading...</span></p>
         <p><strong>Direct Email:</strong> <span id="client-email">Loading...</span></p>
-        <p><strong>Google Rating:</strong> <span id="client-rating">5.0 ★</span></p>
+        <p><strong>Rating:</strong> <span id="client-rating">5.0 ★</span></p>
       </div>
     </div>
 
-    <!-- Feature 2: Embedded Booking Calendar -->
-    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex flex-col">
-      <h2 class="text-2xl font-bold text-gray-900 mb-1">Book an Appointment Online</h2>
-      <p class="text-sm text-gray-600 mb-4">Select a convenient date and time on the calendar below.</p>
-      
-      <!-- Cal.com Inline Container -->
-      <div id="my-cal-inline" class="w-full h-[450px] overflow-hidden rounded-xl border border-gray-100 bg-gray-50"></div>
+    <!-- 2. Working Cal.com Embed -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex flex-col justify-between min-h-[580px]">
+      <div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-1">Book an Appointment Online</h2>
+        <p class="text-sm text-gray-600 mb-4">Select an available date and time on our calendar schedule below.</p>
+      </div>
+
+      <!-- Cal.com Target Container -->
+      <div id="my-cal-inline" class="w-full flex-1 rounded-xl border border-gray-100 overflow-hidden bg-gray-50 min-h-[480px]"></div>
     </div>
 
   </main>
 
-  <!-- Feature 3: Embedded AnythingLLM AI Chatbot (Bottom Right Floating Widget) -->
+  <!-- 3. AI Chatbot Widget -->
   <div id="ai-chat-widget" class="fixed bottom-4 right-4 z-50">
-    <div class="bg-gray-900 text-white p-4 rounded-2xl shadow-2xl border border-gray-700 max-w-xs flex items-center space-x-3 cursor-pointer hover:bg-gray-800 transition-all" onclick="alert('AI Support Chat Widget triggered for ' + document.getElementById('client-name').innerText)">
-      <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-white text-lg animate-bounce">
+    <button onclick="toggleChatModal()" class="bg-gray-900 text-white p-4 rounded-2xl shadow-2xl border border-gray-700 flex items-center space-x-3 hover:bg-gray-800 transition-all">
+      <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-white text-lg">
         💬
       </div>
-      <div>
+      <div class="text-left">
         <p class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Live Chat Assistant</p>
         <p class="text-sm font-bold">Ask AI to Book Appointment</p>
+      </div>
+    </button>
+  </div>
+
+  <!-- Chatbot Window Overlay -->
+  <div id="chat-modal" class="hidden fixed bottom-20 right-4 w-80 md:w-96 h-[480px] bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden flex flex-col">
+    <div class="bg-gray-900 text-white p-3 flex justify-between items-center">
+      <span class="font-bold text-sm">24/7 AI Booking Assistant</span>
+      <button onclick="toggleChatModal()" class="text-gray-400 hover:text-white font-bold px-2">✕</button>
+    </div>
+    <div class="flex-1 p-4 bg-gray-50 flex flex-col justify-between text-sm">
+      <div class="space-y-3 overflow-y-auto">
+        <div class="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[85%] text-xs">
+          Hello! I'm the AI assistant for <span class="client-name-text">Plumbing Services</span>. How can I help you book a service or address an emergency today?
+        </div>
+      </div>
+      <div class="mt-2 border-t pt-2 flex gap-2">
+        <input type="text" placeholder="Type message..." class="flex-1 px-3 py-2 border rounded-lg text-xs outline-none focus:ring-1 focus:ring-blue-500">
+        <button class="bg-blue-600 text-white text-xs px-3 py-2 rounded-lg font-bold">Send</button>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript Dynamic Loader -->
+  <!-- Scripts -->
   <script>
     const GITHUB_USERNAME = "nick12889"; 
     const CLIENTS_JSON_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/plumbing-lead-engine/main/clients.json`;
@@ -132,7 +153,6 @@
           ? client.primary_hex_color 
           : '#1E3A8A';
 
-        // Update Text
         document.getElementById('page-title').innerText = `${client.name} | Booking & Emergency Service`;
         document.getElementById('client-name').innerText = client.name;
         document.querySelectorAll('.client-name-text').forEach(el => el.innerText = client.name);
@@ -142,51 +162,58 @@
         document.getElementById('client-city').innerText = `Service Area: ${client.city}`;
         document.getElementById('client-city-text').innerText = client.city;
         document.getElementById('client-rating').innerText = client.rating ? `${client.rating} ★ (${client.reviews} reviews)` : 'Verified Service';
-        
+
         if (client.tagline) {
           document.getElementById('client-tagline').innerText = client.tagline;
         }
 
-        // Logo
         if (client.logo_url) {
           const logoImg = document.getElementById('client-logo');
           logoImg.src = client.logo_url;
           logoImg.classList.remove('hidden');
         }
 
-        // Dynamic Button Colors
         const callBtn = document.getElementById('call-btn');
         const submitCallbackBtn = document.getElementById('submit-callback-btn');
         callBtn.style.backgroundColor = primaryColor;
         callBtn.href = `tel:${client.phone}`;
         submitCallbackBtn.style.backgroundColor = primaryColor;
 
-     <!-- Feature 2: Embedded Booking Calendar -->
-    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex flex-col h-full">
-      <h2 class="text-2xl font-bold text-gray-900 mb-1">Book an Appointment Online</h2>
-      <p class="text-sm text-gray-600 mb-4">Select a convenient date and time on the calendar below.</p>
-      
-      <!-- Direct Iframe Embed -->
-      <div class="w-full h-[550px] rounded-xl border border-gray-100 overflow-hidden bg-gray-50">
-        <iframe 
-          src="https://cal.com/plumbing-heating-appointment/30min?embed=true" 
-          width="100%" 
-          height="100%" 
-          frameborder="0"
-          style="border:0; min-height: 550px;">
-        </iframe>
-      </div>
-    </div>
-
       } catch (error) {
         console.error("Failed to load clients.json:", error);
       }
     }
 
-    function handleCallbackSubmit(event) {
+    // Initialize Cal.com Embed Correctly
+    Cal("inline", {
+      elementOrSelector: "#my-cal-inline",
+      calLink: "plumbing-heating-appointment/30min",
+      config: { layout: "month_view" }
+    });
+
+    Cal("ui", {
+      styles: { branding: { brandColor: "#1E3A8A" } },
+      hideEventTypeDetails: false,
+      layout: "month_view"
+    });
+
+    // Handle Phone Call Agent Submission
+    async function handleCallbackSubmit(event) {
       event.preventDefault();
-      document.getElementById('callback-status').classList.remove('hidden');
-      // Here you connect your Vapi/Retell/Bland.ai webhook endpoint to trigger the call
+      const statusDiv = document.getElementById('callback-status');
+      statusDiv.classList.remove('hidden');
+      statusDiv.innerText = "⏳ Sending request to AI voice agent...";
+
+      // Connect webhook endpoint here (e.g., Vapi, Retell, Make)
+      setTimeout(() => {
+        statusDiv.innerText = "✅ Call Queued! Our AI agent will call your phone in 30 seconds.";
+      }, 1000);
+    }
+
+    // Toggle Chat Modal
+    function toggleChatModal() {
+      const modal = document.getElementById('chat-modal');
+      modal.classList.toggle('hidden');
     }
 
     loadClientData();
