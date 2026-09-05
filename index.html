@@ -11,6 +11,9 @@
     (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
     Cal("init", {origin:"https://app.cal.com"});
   </script>
+
+  <!-- Vapi Web SDK for In-Browser Agent -->
+  <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-12">
 
@@ -48,20 +51,20 @@
       <div>
         <div class="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-3">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-          <span>Instant AI Phone Dispatcher</span>
+          <span>Instant AI Web Assistant</span>
         </div>
-        <h2 class="text-2xl font-bold text-gray-900">Request Emergency Callback</h2>
+        <h2 class="text-2xl font-bold text-gray-900">Talk to Emergency AI Agent</h2>
         <p class="text-sm text-gray-600 mt-1 mb-6">
-          Submit your info below and our AI Voice Agent will call your phone within 30 seconds to schedule service.
+          Enter your details and click below to start a live voice call with Sarah directly through your browser.
         </p>
 
-        <form id="ai-callback-form" onsubmit="handleCallbackSubmit(event)" class="space-y-4">
+        <form id="ai-callback-form" onsubmit="handleVoiceCall(event)" class="space-y-4">
           <div>
             <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Your Name</label>
             <input type="text" id="user-name" required placeholder="John Doe" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Phone Number (For Instant Call)</label>
+            <label class="block text-xs font-semibold text-gray-700 uppercase mb-1">Phone Number</label>
             <input type="tel" id="user-phone" required placeholder="+353 87 123 4567" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none">
           </div>
           <div>
@@ -74,12 +77,12 @@
             </select>
           </div>
           <button id="submit-callback-btn" type="submit" class="w-full py-4 text-white font-bold rounded-lg shadow-md hover:opacity-90 transition-all text-center bg-blue-900">
-            📞 Submit Info & Call Me Instantly
+            🎙️ Start AI Voice Call Now
           </button>
         </form>
 
         <div id="callback-status" class="hidden mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm font-medium rounded-lg text-center border border-emerald-200">
-          ✅ Triggering AI Phone Agent...
+          🎙️ Voice Agent Connected! Speak into your microphone.
         </div>
       </div>
 
@@ -90,7 +93,7 @@
       </div>
     </div>
 
-    <!-- 2. Working Cal.com Embed -->
+    <!-- 2. Cal.com Embed -->
     <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex flex-col justify-between min-h-[580px]">
       <div>
         <h2 class="text-2xl font-bold text-gray-900 mb-1">Book an Appointment Online</h2>
@@ -103,36 +106,17 @@
 
   </main>
 
-  <!-- 3. AI Chatbot Widget -->
+  <!-- 3. Floating AI Assistant Widget -->
   <div id="ai-chat-widget" class="fixed bottom-4 right-4 z-50">
-    <button onclick="toggleChatModal()" class="bg-gray-900 text-white p-4 rounded-2xl shadow-2xl border border-gray-700 flex items-center space-x-3 hover:bg-gray-800 transition-all">
+    <button onclick="handleVoiceCall(event)" class="bg-gray-900 text-white p-4 rounded-2xl shadow-2xl border border-gray-700 flex items-center space-x-3 hover:bg-gray-800 transition-all">
       <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-white text-lg">
-        💬
+        🎙️
       </div>
       <div class="text-left">
-        <p class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Live Chat Assistant</p>
-        <p class="text-sm font-bold">Ask AI to Book Appointment</p>
+        <p class="text-xs font-semibold text-emerald-400 uppercase tracking-wide">Live Voice Assistant</p>
+        <p class="text-sm font-bold">Speak with AI Agent</p>
       </div>
     </button>
-  </div>
-
-  <!-- Chatbot Window Overlay -->
-  <div id="chat-modal" class="hidden fixed bottom-20 right-4 w-80 md:w-96 h-[480px] bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 overflow-hidden flex flex-col">
-    <div class="bg-gray-900 text-white p-3 flex justify-between items-center">
-      <span class="font-bold text-sm">24/7 AI Booking Assistant</span>
-      <button onclick="toggleChatModal()" class="text-gray-400 hover:text-white font-bold px-2">✕</button>
-    </div>
-    <div class="flex-1 p-4 bg-gray-50 flex flex-col justify-between text-sm">
-      <div class="space-y-3 overflow-y-auto">
-        <div class="bg-blue-100 text-blue-900 p-3 rounded-lg max-w-[85%] text-xs">
-          Hello! I'm the AI assistant for <span class="client-name-text">Plumbing Services</span>. How can I help you book a service or address an emergency today?
-        </div>
-      </div>
-      <div class="mt-2 border-t pt-2 flex gap-2">
-        <input type="text" placeholder="Type message..." class="flex-1 px-3 py-2 border rounded-lg text-xs outline-none focus:ring-1 focus:ring-blue-500">
-        <button class="bg-blue-600 text-white text-xs px-3 py-2 rounded-lg font-bold">Send</button>
-      </div>
-    </div>
   </div>
 
   <!-- Scripts -->
@@ -140,6 +124,10 @@
     const GITHUB_USERNAME = "nick12889"; 
     const CLIENTS_JSON_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/plumbing-lead-engine/main/clients.json`;
 
+    let vapiInstance = null;
+    let isCallActive = false;
+
+    // Load Dynamic Client Details
     async function loadClientData() {
       const urlParams = new URLSearchParams(window.location.search);
       const clientSlug = urlParams.get('client') || 'doc-heating-and-plumbing';
@@ -155,7 +143,6 @@
 
         document.getElementById('page-title').innerText = `${client.name} | Booking & Emergency Service`;
         document.getElementById('client-name').innerText = client.name;
-        document.querySelectorAll('.client-name-text').forEach(el => el.innerText = client.name);
         document.getElementById('client-phone').innerText = client.phone || 'Contact Us';
         document.getElementById('client-email').innerText = client.email || 'N/A';
         document.getElementById('client-address').innerText = client.address || client.city;
@@ -163,9 +150,7 @@
         document.getElementById('client-city-text').innerText = client.city;
         document.getElementById('client-rating').innerText = client.rating ? `${client.rating} ★ (${client.reviews} reviews)` : 'Verified Service';
 
-        if (client.tagline) {
-          document.getElementById('client-tagline').innerText = client.tagline;
-        }
+        if (client.tagline) document.getElementById('client-tagline').innerText = client.tagline;
 
         if (client.logo_url) {
           const logoImg = document.getElementById('client-logo');
@@ -197,102 +182,74 @@
       layout: "month_view"
     });
 
-    // Handle Phone Call Agent Submission
-    async function handleCallbackSubmit(event) {
-      event.preventDefault();
+    // Initialize Vapi SDK
+    document.addEventListener("DOMContentLoaded", () => {
+      vapiInstance = window.vapiSDK.run({
+        apiKey: "af072552-745e-4e16-a0ff-32659be890f8"
+      });
+
+      vapiInstance.on('call-start', () => {
+        isCallActive = true;
+        const statusDiv = document.getElementById("callback-status");
+        const btn = document.getElementById("submit-callback-btn");
+        if (statusDiv) {
+          statusDiv.classList.remove('hidden');
+          statusDiv.className = "mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm font-medium rounded-lg text-center border border-emerald-200";
+          statusDiv.innerText = "🎙️ Voice Agent Connected! Speak into your microphone.";
+        }
+        if (btn) btn.innerText = "🛑 End Voice Call";
+      });
+
+      vapiInstance.on('call-end', () => {
+        isCallActive = false;
+        const statusDiv = document.getElementById("callback-status");
+        const btn = document.getElementById("submit-callback-btn");
+        if (statusDiv) {
+          statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
+          statusDiv.innerText = "✅ Call ended. Dispatch summary sent to technician!";
+        }
+        if (btn) btn.innerText = "🎙️ Start AI Voice Call Now";
+      });
+    });
+
+    // Handle Browser Voice Call Initiation
+    function handleVoiceCall(event) {
+      if (event) event.preventDefault();
+
+      if (isCallActive) {
+        vapiInstance.stop();
+        return;
+      }
 
       const nameInput = document.getElementById("user-name");
       const phoneInput = document.getElementById("user-phone");
       const serviceInput = document.getElementById("user-service");
-      const statusDiv = document.getElementById("callback-status");
-      const clientName = document.getElementById("client-name") ? document.getElementById("client-name").innerText : "Plumbing Services";
 
       const name = nameInput ? nameInput.value.trim() : "Valued Customer";
-      const rawPhone = phoneInput ? phoneInput.value.trim() : "";
+      const phone = phoneInput ? phoneInput.value.trim() : "";
       const service = serviceInput ? serviceInput.value : "Emergency Repair";
 
-      // 1. Clean up phone number format (strips dashes and extra spaces)
-      let formattedPhone = rawPhone.replace(/(?!^\+)[^\d]/g, "");
-
-      if (!formattedPhone) {
-        if (statusDiv) {
-          statusDiv.classList.remove('hidden');
-          statusDiv.className = "mt-4 p-3 bg-red-50 text-red-800 text-sm font-medium rounded-lg text-center border border-red-200";
-          statusDiv.innerText = "❌ Please enter a valid phone number.";
-        }
-        return;
-      }
-
-      if (!formattedPhone.startsWith("+")) {
-        formattedPhone = "+" + formattedPhone;
-      }
+      const statusDiv = document.getElementById("callback-status");
 
       if (statusDiv) {
         statusDiv.classList.remove('hidden');
         statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
-        statusDiv.innerText = "⏳ Initiating emergency call...";
+        statusDiv.innerText = "⏳ Connecting to Sarah...";
       }
 
-      const VAPI_PUBLIC_KEY = "d959fe85-6a0d-4ddf-a24b-b07853524171";
-
-      try {
-        const response = await fetch("https://api.vapi.ai/call/phone", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${VAPI_PUBLIC_KEY}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            assistantId: "56ae5518-cf2c-481f-9cdb-f2d104b9c907",
-            phoneNumberId: "f578b16f-5ce3-4ca6-a080-1b362965f5c7",
-            customer: {
-              number: formattedPhone,
-              name: name
-            },
-            assistantOverrides: {
-              variableValues: {
-                customer_name: name,
-                service: service,
-                business: clientName,
-                call_type: "AFTER_HOURS_EMERGENCY"
-              }
-            }
-          })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          if (statusDiv) {
-            statusDiv.className = "mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm font-medium rounded-lg text-center border border-emerald-200";
-            statusDiv.innerText = "✅ Call initiated! Expect a call from Sarah in ~10 seconds.";
-          }
-        } else {
-          console.error("Vapi API Error Response:", data);
-          if (statusDiv) {
-            statusDiv.className = "mt-4 p-3 bg-red-50 text-red-800 text-sm font-medium rounded-lg text-center border border-red-200";
-            statusDiv.innerText = `❌ Call failed: ${data.message || JSON.stringify(data)}`;
+      vapiInstance.start({
+        assistantId: "56ae5518-cf2c-481f-9cdb-f2d104b9c907",
+        assistantOverrides: {
+          variableValues: {
+            customer_name: name,
+            customer_phone: phone,
+            service: service
           }
         }
-      } catch (error) {
-        console.error("Network Error:", error);
-        if (statusDiv) {
-          statusDiv.className = "mt-4 p-3 bg-red-50 text-red-800 text-sm font-medium rounded-lg text-center border border-red-200";
-          statusDiv.innerText = `❌ Network Error: ${error.message}`;
-        }
-      }
-    }
-
-    // Toggle Chat Modal
-    function toggleChatModal() {
-      const modal = document.getElementById('chat-modal');
-      modal.classList.toggle('hidden');
+      });
     }
 
     loadClientData();
   </script>
 </body>
 </html>
-
-
-
