@@ -12,8 +12,8 @@
     Cal("init", {origin:"https://app.cal.com"});
   </script>
 
-  <!-- Vapi Web SDK for In-Browser Agent -->
-  <script src="https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js"></script>
+  <!-- Official Vapi Web SDK -->
+  <script src="https://unpkg.com/@vapi-ai/web/dist/vapi.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-12">
 
@@ -24,7 +24,7 @@
         <img id="client-logo" src="" alt="Logo" class="h-10 w-auto hidden">
         <span id="client-name" class="text-xl font-bold text-gray-900">Plumbing Services</span>
       </div>
-      <a id="call-btn" href="tel:" class="text-white font-semibold px-5 py-2.5 rounded-lg shadow transition-all">
+      <a id="call-btn" href="tel:" class="text-white font-semibold px-5 py-2.5 rounded-lg shadow transition-all bg-blue-900">
         Call Now: <span id="client-phone">Loading...</span>
       </a>
     </div>
@@ -119,15 +119,100 @@
     </button>
   </div>
 
-  <!-- Scripts -->
+  <!-- JavaScript Logic -->
   <script>
     const GITHUB_USERNAME = "nick12889"; 
     const CLIENTS_JSON_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/plumbing-lead-engine/main/clients.json`;
 
-    let vapiInstance = null;
+    let vapi = null;
     let isCallActive = false;
 
-    // Load Dynamic Client Details
+    // Safe Auto-Retry Initialization Loader
+    function initVapiSDK() {
+      if (window.Vapi) {
+        if (!vapi) {
+          vapi = new window.Vapi("af072552-745e-4e16-a0ff-32659be890f8");
+
+          vapi.on('call-start', () => {
+            isCallActive = true;
+            const statusDiv = document.getElementById("callback-status");
+            const btn = document.getElementById("submit-callback-btn");
+            if (statusDiv) {
+              statusDiv.classList.remove('hidden');
+              statusDiv.className = "mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm font-medium rounded-lg text-center border border-emerald-200";
+              statusDiv.innerText = "🎙️ Voice Agent Connected! Speak into your microphone.";
+            }
+            if (btn) btn.innerText = "🛑 End Voice Call";
+          });
+
+          vapi.on('call-end', () => {
+            isCallActive = false;
+            const statusDiv = document.getElementById("callback-status");
+            const btn = document.getElementById("submit-callback-btn");
+            if (statusDiv) {
+              statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
+              statusDiv.innerText = "✅ Call ended. Dispatch summary sent to technician!";
+            }
+            if (btn) btn.innerText = "🎙️ Start AI Voice Call Now";
+          });
+
+          vapi.on('error', (e) => {
+            console.error("Vapi Error:", e);
+            alert("Voice Call Error: " + (e.message || "Please check microphone permissions."));
+          });
+        }
+        return true;
+      }
+      return false;
+    }
+
+    // Check every 200ms until Vapi attaches to window
+    const vapiCheckInterval = setInterval(() => {
+      if (initVapiSDK()) {
+        clearInterval(vapiCheckInterval);
+      }
+    }, 200);
+
+    // Handle Browser Voice Call
+    function handleVoiceCall(event) {
+      if (event) event.preventDefault();
+
+      if (!vapi && !initVapiSDK()) {
+        alert("Voice Assistant SDK is loading. Please try again in 2 seconds.");
+        return;
+      }
+
+      if (isCallActive) {
+        vapi.stop();
+        return;
+      }
+
+      const nameInput = document.getElementById("user-name");
+      const phoneInput = document.getElementById("user-phone");
+      const serviceInput = document.getElementById("user-service");
+
+      const name = nameInput ? nameInput.value.trim() : "Valued Customer";
+      const phone = phoneInput ? phoneInput.value.trim() : "";
+      const service = serviceInput ? serviceInput.value : "Emergency Repair";
+
+      const statusDiv = document.getElementById("callback-status");
+      if (statusDiv) {
+        statusDiv.classList.remove('hidden');
+        statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
+        statusDiv.innerText = "⏳ Connecting to Sarah...";
+      }
+
+      // Launch Assistant
+      vapi.start("1f26de2b-6886-404a-871c-a1a095971633", {
+        variableValues: {
+          customer_name: name,
+          customer_phone: phone,
+          service: service
+        }
+      });
+    }
+
+    // Load Dynamic Client Data from GitHub JSON
     async function loadClientData() {
       const urlParams = new URLSearchParams(window.location.search);
       const clientSlug = urlParams.get('client') || 'doc-heating-and-plumbing';
@@ -160,16 +245,18 @@
 
         const callBtn = document.getElementById('call-btn');
         const submitCallbackBtn = document.getElementById('submit-callback-btn');
-        callBtn.style.backgroundColor = primaryColor;
-        callBtn.href = `tel:${client.phone}`;
-        submitCallbackBtn.style.backgroundColor = primaryColor;
+        if (callBtn) {
+          callBtn.style.backgroundColor = primaryColor;
+          callBtn.href = `tel:${client.phone}`;
+        }
+        if (submitCallbackBtn) submitCallbackBtn.style.backgroundColor = primaryColor;
 
       } catch (error) {
         console.error("Failed to load clients.json:", error);
       }
     }
 
-    // Initialize Cal.com Embed
+    // Initialize Cal.com
     Cal("inline", {
       elementOrSelector: "#my-cal-inline",
       calLink: "plumbing-heating-appointment/30min",
@@ -181,73 +268,6 @@
       hideEventTypeDetails: false,
       layout: "month_view"
     });
-
-    // Initialize Vapi SDK
-    document.addEventListener("DOMContentLoaded", () => {
-      vapiInstance = window.vapiSDK.run({
-        apiKey: "af072552-745e-4e16-a0ff-32659be890f8"
-      });
-
-      vapiInstance.on('call-start', () => {
-        isCallActive = true;
-        const statusDiv = document.getElementById("callback-status");
-        const btn = document.getElementById("submit-callback-btn");
-        if (statusDiv) {
-          statusDiv.classList.remove('hidden');
-          statusDiv.className = "mt-4 p-3 bg-emerald-50 text-emerald-800 text-sm font-medium rounded-lg text-center border border-emerald-200";
-          statusDiv.innerText = "🎙️ Voice Agent Connected! Speak into your microphone.";
-        }
-        if (btn) btn.innerText = "🛑 End Voice Call";
-      });
-
-      vapiInstance.on('call-end', () => {
-        isCallActive = false;
-        const statusDiv = document.getElementById("callback-status");
-        const btn = document.getElementById("submit-callback-btn");
-        if (statusDiv) {
-          statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
-          statusDiv.innerText = "✅ Call ended. Dispatch summary sent to technician!";
-        }
-        if (btn) btn.innerText = "🎙️ Start AI Voice Call Now";
-      });
-    });
-
-    // Handle Browser Voice Call Initiation
-    function handleVoiceCall(event) {
-      if (event) event.preventDefault();
-
-      if (isCallActive) {
-        vapiInstance.stop();
-        return;
-      }
-
-      const nameInput = document.getElementById("user-name");
-      const phoneInput = document.getElementById("user-phone");
-      const serviceInput = document.getElementById("user-service");
-
-      const name = nameInput ? nameInput.value.trim() : "Valued Customer";
-      const phone = phoneInput ? phoneInput.value.trim() : "";
-      const service = serviceInput ? serviceInput.value : "Emergency Repair";
-
-      const statusDiv = document.getElementById("callback-status");
-
-      if (statusDiv) {
-        statusDiv.classList.remove('hidden');
-        statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
-        statusDiv.innerText = "⏳ Connecting to Sarah...";
-      }
-
-      vapiInstance.start({
-        assistantId: "1f26de2b-6886-404a-871c-a1a095971633",
-        assistantOverrides: {
-          variableValues: {
-            customer_name: name,
-            customer_phone: phone,
-            service: service
-          }
-        }
-      });
-    }
 
     loadClientData();
   </script>
