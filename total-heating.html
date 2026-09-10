@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Total Heating & Plumbing Services | Expert Advice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Official Vapi Web SDK -->
+  <script src="https://unpkg.com/@vapi-ai/web/dist/vapi.js"></script>
+
+  <style>
+    .brand-blue-btn { background-color: #90CAF9; }
+    .brand-blue-btn:hover { background-color: #64B5F6; }
+    input, select, textarea {
+      border-bottom: 1px solid #000 !important;
+      border-top: none !important;
+      border-left: none !important;
+      border-right: none !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none !important;
+      border-bottom: 2px solid #000 !important;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 font-sans pb-16">
+
+  <!-- Header -->
+  <header class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center border-b border-gray-100">
+    <div>
+      <h1 class="text-xl font-bold tracking-tight">Total Heating & Plumbing Services Ltd.</h1>
+      <p class="text-xs text-gray-500">Co. Kildare & Leinster Region</p>
+    </div>
+    <a href="tel:+35314911001" class="text-sm font-semibold hover:underline">
+      Call Experts: (01) 491 1001
+    </a>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-6 py-12 grid lg:grid-cols-12 gap-12">
+
+    <!-- Left Column: Contact Details & Map -->
+    <div class="lg:col-span-4 space-y-8">
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Contact Our Team<br>of Experts Today</h2>
+        <div class="text-sm text-gray-600 space-y-2">
+          <p class="font-medium text-gray-900">Ballyshane, Rathangan, Co. Kildare,<br>Ireland Eircode: R51 R647</p>
+          <p>Email: <a href="mailto:info@totalheating.ie" class="underline">info@totalheating.ie</a></p>
+          <p>Phone: <a href="tel:+35314911001" class="underline">(01) 491 1001</a></p>
+        </div>
+      </div>
+
+      <!-- Map Mock Container -->
+      <div class="rounded-xl overflow-hidden border border-gray-200 p-2 bg-gray-50">
+        <div class="p-3 text-xs bg-white rounded shadow-sm border mb-2">
+          <strong class="block text-red-600">📍 Total Heating & Plumbing Services</strong>
+          Rathangan, Co. Kildare
+        </div>
+        <div class="h-36 bg-emerald-100 rounded flex items-center justify-center text-xs text-emerald-800 font-medium">
+          Interactive Service Area Map (Kildare & Surrounds)
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Enhanced Inquiry Form with 3-Slot Preferred Time Picker -->
+    <div class="lg:col-span-8 space-y-8">
+      <div>
+        <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
+          Fill out this form and you’ll receive a call from one of our customer care experts. They’ll be able to answer any questions you have and offer expert advice.
+        </h2>
+      </div>
+
+      <form id="inquiry-form" onsubmit="handleSlotReservation(event)" class="space-y-6 pt-4">
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Full name *</label>
+            <input type="text" id="user-name" required class="w-full py-2 text-sm">
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Phone number *</label>
+            <input type="tel" id="user-phone" required class="w-full py-2 text-sm">
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Email *</label>
+            <input type="email" id="user-email" required class="w-full py-2 text-sm">
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Eircode *</label>
+            <input type="text" id="user-eircode" required placeholder="R51 R647" class="w-full py-2 text-sm">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Select Location</label>
+          <select id="user-location" class="w-full py-2 text-sm">
+            <option>Kildare / Rathangan</option>
+            <option>Dublin & Surrounds</option>
+            <option>Meath / Laois Region</option>
+          </select>
+        </div>
+
+        <!-- NEW: Preferred 3-Slot Visit Time Selection -->
+        <div class="pt-4 border-t border-gray-100">
+          <p class="text-sm font-bold text-gray-900 mb-1">Suggest 3 Preferred Slots for Engineer Visit</p>
+          <p class="text-xs text-gray-500 mb-4">Our AI agent will review technician schedules and instantly confirm one slot via automated callback.</p>
+          
+          <div class="grid md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">Slot 1 (Preferred)</label>
+              <select id="slot-1" class="w-full py-2 text-xs">
+                <option>Tomorrow Morning (8 AM - 11 AM)</option>
+                <option>Tomorrow Midday (11 AM - 2 PM)</option>
+                <option>Tomorrow Afternoon (2 PM - 5 PM)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">Slot 2 (Backup)</label>
+              <select id="slot-2" class="w-full py-2 text-xs">
+                <option>Tomorrow Afternoon (2 PM - 5 PM)</option>
+                <option>Day After Tomorrow (8 AM - 11 AM)</option>
+                <option>Day After Tomorrow (11 AM - 2 PM)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">Slot 3 (Alternative)</label>
+              <select id="slot-3" class="w-full py-2 text-xs">
+                <option>Weekend Morning (9 AM - 12 PM)</option>
+                <option>Day After Tomorrow (2 PM - 5 PM)</option>
+                <option>Next Available Emergency Window</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Your message</label>
+          <textarea id="user-message" rows="3" class="w-full py-2 text-sm"></textarea>
+        </div>
+
+        <div class="flex items-center space-x-3 pt-2">
+          <input type="checkbox" id="consent" required class="h-4 w-4">
+          <label for="consent" class="text-xs text-gray-600">I allow this website to store my submission so they can respond to my inquiry. *</label>
+        </div>
+
+        <div class="pt-4">
+          <button type="submit" class="brand-blue-btn text-gray-900 font-bold px-8 py-3 rounded-full text-sm shadow-sm transition-all">
+            Submit & Confirm Slot via AI Agent
+          </button>
+        </div>
+
+        <div id="slot-status" class="hidden p-4 bg-blue-50 text-blue-900 rounded-lg text-sm font-medium border border-blue-200">
+          ⏳ AI Dispatcher is reviewing your 3 slots. Expect a confirmation call in under 60 seconds!
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Floating AI Assistant Chatbot Widget -->
+  <div class="fixed bottom-6 right-6 z-50">
+    <button onclick="triggerVoiceAssistant()" class="bg-gray-900 text-white p-4 rounded-full shadow-2xl flex items-center space-x-3 hover:bg-gray-800 transition-all border border-gray-700">
+      <div class="w-8 h-8 rounded-full brand-blue-btn flex items-center justify-center font-bold text-gray-900 text-sm">
+        💬
+      </div>
+      <div class="text-left pr-2">
+        <p class="text-xs font-bold uppercase tracking-wider text-blue-300">Instant AI Chatbot</p>
+        <p class="text-xs text-gray-300">Book visit or ask advice</p>
+      </div>
+    </button>
+  </div>
+
+  <script>
+    let vapi = null;
+
+    function initVapiSDK() {
+      if (window.Vapi && !vapi) {
+        vapi = new window.Vapi("af072552-745e-4e16-a0ff-32659be890f8");
+        return true;
+      }
+      return false;
+    }
+
+    function handleSlotReservation(e) {
+      e.preventDefault();
+      const status = document.getElementById("slot-status");
+      status.classList.remove("hidden");
+
+      const name = document.getElementById("user-name").value;
+      const phone = document.getElementById("user-phone").value;
+      const slot1 = document.getElementById("slot-1").value;
+
+      if (!vapi) initVapiSDK();
+
+      if (vapi) {
+        vapi.start("1f26de2b-6886-404a-871c-a1a095971633", {
+          variableValues: {
+            customer_name: name,
+            customer_phone: phone,
+            requested_slot: slot1
+          }
+        });
+      }
+    }
+
+    function triggerVoiceAssistant() {
+      if (!vapi && !initVapiSDK()) {
+        alert("AI Assistant initializing...");
+        return;
+      }
+      vapi.start("1f26de2b-6886-404a-871c-a1a095971633");
+    }
+  </script>
+</body>
+</html>
