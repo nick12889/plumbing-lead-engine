@@ -38,7 +38,7 @@
         Reliable Plumbing & Heating
       </h1>
       <p class="text-base md:text-lg text-gray-600">
-        Serving <span id="client-city-text">your area</span> with 24/7 fast emergency response and instant AI dispatching.
+        Serving <span id="client-city-text">your area</span> with fast emergency response and instant AI dispatching.
       </p>
     </div>
   </section>
@@ -55,7 +55,7 @@
         </div>
         <h2 class="text-2xl font-bold text-gray-900">Talk to Emergency AI Agent</h2>
         <p class="text-sm text-gray-600 mt-1 mb-6">
-          Enter your details and click below to start a live voice call with Sarah directly through your browser.
+          Enter your details and click below to start a live voice call directly through your browser.
         </p>
 
         <form id="ai-callback-form" onsubmit="handleVoiceCall(event)" class="space-y-4">
@@ -121,9 +121,6 @@
 
   <!-- JavaScript Logic -->
   <script>
-    const GITHUB_USERNAME = "nick12889"; 
-    const CLIENTS_JSON_URL = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/plumbing-lead-engine/main/clients.json`;
-
     let vapi = null;
     let isCallActive = false;
 
@@ -151,7 +148,7 @@
             const btn = document.getElementById("submit-callback-btn");
             if (statusDiv) {
               statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
-              statusDiv.innerText = "✅ Call ended. Dispatch summary sent to technician!";
+              statusDiv.innerText = "✅ Call ended. Summary sent to technician!";
             }
             if (btn) btn.innerText = "🎙️ Start AI Voice Call Now";
           });
@@ -166,14 +163,12 @@
       return false;
     }
 
-    // Check every 200ms until Vapi attaches to window
     const vapiCheckInterval = setInterval(() => {
       if (initVapiSDK()) {
         clearInterval(vapiCheckInterval);
       }
     }, 200);
 
-    // Handle Browser Voice Call
     function handleVoiceCall(event) {
       if (event) event.preventDefault();
 
@@ -199,10 +194,9 @@
       if (statusDiv) {
         statusDiv.classList.remove('hidden');
         statusDiv.className = "mt-4 p-3 bg-blue-50 text-blue-800 text-sm font-medium rounded-lg text-center border border-blue-200";
-        statusDiv.innerText = "⏳ Connecting to Sarah...";
+        statusDiv.innerText = "⏳ Connecting to Assistant...";
       }
 
-      // Launch Assistant
       vapi.start("1f26de2b-6886-404a-871c-a1a095971633", {
         variableValues: {
           customer_name: name,
@@ -212,19 +206,25 @@
       });
     }
 
-    // Load Dynamic Client Data from GitHub JSON
+    // Fixed Robust Dynamic Client Data Loading
     async function loadClientData() {
       const urlParams = new URLSearchParams(window.location.search);
       const clientSlug = urlParams.get('client') || 'doc-heating-and-plumbing';
 
       try {
-        const response = await fetch(CLIENTS_JSON_URL);
+        // Primary attempt: fetch exact file name from current directory
+        let response = await fetch('./Clients.json');
+        if (!response.ok) {
+          // Fallback attempt: fetch raw github user URL if local fails
+          response = await fetch('https://raw.githubusercontent.com/nick12889/plumbing-lead-engine/main/Clients.json');
+        }
+
         const clients = await response.json();
         const client = clients.find(c => c.slug === clientSlug) || clients[0];
 
-        const primaryColor = client.primary_hex_color && client.primary_hex_color.startsWith('#') 
+        const primaryColor = (client.primary_hex_color && client.primary_hex_color.startsWith('#')) 
           ? client.primary_hex_color 
-          : '#1E3A8A';
+          : '#1A4B84';
 
         document.getElementById('page-title').innerText = `${client.name} | Booking & Emergency Service`;
         document.getElementById('client-name').innerText = client.name;
@@ -241,6 +241,9 @@
           const logoImg = document.getElementById('client-logo');
           logoImg.src = client.logo_url;
           logoImg.classList.remove('hidden');
+          logoImg.onerror = function() {
+            this.classList.add('hidden'); // Hide gracefully if broken image URL
+          };
         }
 
         const callBtn = document.getElementById('call-btn');
@@ -249,27 +252,29 @@
           callBtn.style.backgroundColor = primaryColor;
           callBtn.href = `tel:${client.phone}`;
         }
-        if (submitCallbackBtn) submitCallbackBtn.style.backgroundColor = primaryColor;
+        if (submitCallbackBtn) {
+          submitCallbackBtn.style.backgroundColor = primaryColor;
+        }
+
+        // Initialize Cal.com with exact client brand color
+        Cal("inline", {
+          elementOrSelector: "#my-cal-inline",
+          calLink: "plumbing-heating-appointment/30min",
+          config: { layout: "month_view" }
+        });
+
+        Cal("ui", {
+          styles: { branding: { brandColor: primaryColor } },
+          hideEventTypeDetails: false,
+          layout: "month_view"
+        });
 
       } catch (error) {
-        console.error("Failed to load clients.json:", error);
+        console.error("Failed to load Clients.json:", error);
       }
     }
-
-    // Initialize Cal.com
-    Cal("inline", {
-      elementOrSelector: "#my-cal-inline",
-      calLink: "plumbing-heating-appointment/30min",
-      config: { layout: "month_view" }
-    });
-
-    Cal("ui", {
-      styles: { branding: { brandColor: "#1E3A8A" } },
-      hideEventTypeDetails: false,
-      layout: "month_view"
-    });
 
     loadClientData();
   </script>
 </body>
-</html>
+</html>vv
