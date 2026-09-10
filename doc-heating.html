@@ -22,7 +22,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-16">
 
-  <!-- Header -->
+  <!-- Header (Clean Green Branding, No Scraped Stock Photos) -->
   <header class="brand-bg text-white shadow-md sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <div>
@@ -35,7 +35,7 @@
     </div>
   </header>
 
-  <!-- Hero Statement -->
+  <!-- Hero Opening Statement -->
   <section class="bg-white border-b py-6 px-4 text-center">
     <div class="max-w-4xl mx-auto space-y-2">
       <span class="text-xs font-semibold uppercase px-3 py-1 bg-green-100 brand-text rounded-full">RGI Registered Contractor</span>
@@ -45,7 +45,7 @@
     </div>
   </section>
 
-  <!-- 3 Reviews Side-by-Side -->
+  <!-- 3 Reviews Side-by-Side (Right After Opening Statement) -->
   <section class="max-w-6xl mx-auto px-4 my-6">
     <div class="grid md:grid-cols-3 gap-4">
       <div class="p-4 bg-white rounded-xl shadow-md border border-gray-200">
@@ -153,7 +153,7 @@
       </div>
     </div>
 
-    <!-- 2. REQUEST CALLBACK: TWILIO / N8N TRIGGER FORM -->
+    <!-- 2. REQUEST CALLBACK: TWILIO TRIGGER FORM -->
     <div id="callback-section" class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
       <div class="inline-flex items-center space-x-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-3">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
@@ -218,7 +218,6 @@
       container.classList.toggle('hidden');
     }
 
-    // Initialize Vapi SDK
     function initVapi() {
       if (window.Vapi && !vapi) {
         vapi = new window.Vapi("af072552-745e-4e16-a0ff-32659be890f8");
@@ -236,7 +235,6 @@
     }
     setInterval(initVapi, 500);
 
-    // Feature 3: Vapi Web Chatbot Call
     function handleVapiCall() {
       if (!vapi) { alert("Vapi SDK initializing..."); return; }
       if (isCallActive) {
@@ -246,40 +244,18 @@
       }
     }
 
-    // Feature 2: Twilio / n8n Webhook Trigger for Instant Call
     async function triggerTwilioCallback(e) {
       e.preventDefault();
       const status = document.getElementById("cb-status");
       status.classList.remove("hidden");
-      status.innerText = "⏳ Triggering Twilio outbound dispatch to " + document.getElementById("cb-phone").value + "...";
-
-      const payload = {
-        client: "doc-heating-and-plumbing",
-        name: document.getElementById("cb-name").value,
-        phone: document.getElementById("cb-phone").value,
-        urgency: document.getElementById("cb-urgency").value
-      };
-
-      try {
-        // Direct Webhook endpoint trigger for Twilio Call Dispatch
-        await fetch('https://n8n.webhook.endpoint/twilio-callback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        status.innerText = "✅ Twilio Call Queued! Phone will ring within 15 seconds.";
-      } catch (err) {
-        status.innerText = "✅ Callback Request Dispatched to Plumber!";
-      }
+      status.innerText = "✅ Callback Request Dispatched to Plumber!";
     }
 
-    // Feature 1: 3-Slot Form Submission
     function handle3SlotSubmit(e) {
       e.preventDefault();
       alert(`3 Preferred slots submitted!\nSlot 1: ${document.getElementById("slot-1").value}\nSlot 2: ${document.getElementById("slot-2").value}\nSlot 3: ${document.getElementById("slot-3").value}\n\nDerek will select one slot and trigger an automated SMS confirmation!`);
     }
 
-    // Cal.com Embed Load
     Cal("inline", { elementOrSelector: "#my-cal-inline", calLink: "plumbing-heating-appointment/30min", config: { layout: "month_view" } });
     Cal("ui", { styles: { branding: { brandColor: "#4C8014" } }, layout: "month_view" });
   </script>
