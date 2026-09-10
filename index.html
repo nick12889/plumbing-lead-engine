@@ -18,7 +18,7 @@
 <body class="bg-gray-50 text-gray-800 font-sans pb-12">
 
   <!-- Header -->
-  <header class="bg-white shadow-sm border-b sticky top-0 z-40">
+  <header id="main-header" class="bg-white shadow-sm border-b sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <div class="flex items-center space-x-3">
         <img id="client-logo" src="" alt="Logo" class="h-10 w-auto hidden">
@@ -31,7 +31,7 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-b from-gray-100 to-white py-10 px-4 text-center">
+  <section id="hero-section" class="bg-gradient-to-b from-gray-100 to-white py-10 px-4 text-center">
     <div class="max-w-4xl mx-auto space-y-3">
       <span id="client-city" class="text-xs font-semibold uppercase px-3 py-1 bg-gray-200 text-gray-700 rounded-full">Local Contractor</span>
       <h1 id="client-tagline" class="text-3xl md:text-5xl font-extrabold text-gray-900">
@@ -124,7 +124,6 @@
     let vapi = null;
     let isCallActive = false;
 
-    // Safe Auto-Retry Initialization Loader
     function initVapiSDK() {
       if (window.Vapi) {
         if (!vapi) {
@@ -206,16 +205,14 @@
       });
     }
 
-    // Fixed Robust Dynamic Client Data Loading
+    // Dynamic Client Data Loader with Asset & Color Injection
     async function loadClientData() {
       const urlParams = new URLSearchParams(window.location.search);
       const clientSlug = urlParams.get('client') || 'doc-heating-and-plumbing';
 
       try {
-        // Primary attempt: fetch exact file name from current directory
         let response = await fetch('./Clients.json');
         if (!response.ok) {
-          // Fallback attempt: fetch raw github user URL if local fails
           response = await fetch('https://raw.githubusercontent.com/nick12889/plumbing-lead-engine/main/Clients.json');
         }
 
@@ -235,28 +232,40 @@
         document.getElementById('client-city-text').innerText = client.city;
         document.getElementById('client-rating').innerText = client.rating ? `${client.rating} ★ (${client.reviews} reviews)` : 'Verified Service';
 
-        if (client.tagline) document.getElementById('client-tagline').innerText = client.tagline;
-
-        if (client.logo_url) {
-          const logoImg = document.getElementById('client-logo');
-          logoImg.src = client.logo_url;
-          logoImg.classList.remove('hidden');
-          logoImg.onerror = function() {
-            this.classList.add('hidden'); // Hide gracefully if broken image URL
-          };
+        if (client.tagline) {
+          const taglineElem = document.getElementById('client-tagline');
+          taglineElem.innerText = client.tagline;
+          taglineElem.style.color = primaryColor;
         }
 
+        // Display local logo asset or original fallback
+        const logoImg = document.getElementById('client-logo');
+        const logoPath = client.local_logo_url || `./logos/${client.slug}.png` || client.logo_url;
+        logoImg.src = logoPath;
+        logoImg.classList.remove('hidden');
+        logoImg.onerror = function() {
+          if (client.logo_url && this.src !== client.logo_url) {
+            this.src = client.logo_url;
+          } else {
+            this.classList.add('hidden');
+          }
+        };
+
+        // Inject Dynamic Colors across UI
+        document.getElementById('main-header').style.borderTop = `4px solid ${primaryColor}`;
+        
         const callBtn = document.getElementById('call-btn');
-        const submitCallbackBtn = document.getElementById('submit-callback-btn');
         if (callBtn) {
           callBtn.style.backgroundColor = primaryColor;
           callBtn.href = `tel:${client.phone}`;
         }
+        
+        const submitCallbackBtn = document.getElementById('submit-callback-btn');
         if (submitCallbackBtn) {
           submitCallbackBtn.style.backgroundColor = primaryColor;
         }
 
-        // Initialize Cal.com with exact client brand color
+        // Initialize Cal.com
         Cal("inline", {
           elementOrSelector: "#my-cal-inline",
           calLink: "plumbing-heating-appointment/30min",
@@ -277,4 +286,4 @@
     loadClientData();
   </script>
 </body>
-</html>vv
+</html>
